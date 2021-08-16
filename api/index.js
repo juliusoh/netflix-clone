@@ -2,7 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import authRoute from "./routes/Auth.js";
-
+import userRoute from "./routes/Users.js";
 const app = express();
 dotenv.config();
 
@@ -18,6 +18,7 @@ mongoose
 app.use(express.json());
 
 app.use("/api/auth", authRoute);
+app.use("/api/users", userRoute);
 
 app.listen(8800, () => {
   console.log("back end is running");
