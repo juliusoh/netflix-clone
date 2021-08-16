@@ -11,7 +11,9 @@ router.post("/", verify, async (req, res) => {
     try {
       const savedMovie = await newMovie.save();
       res.status(201).json(savedMovie);
-    } catch (error) {}
+    } catch (error) {
+      res.status(500).json.log(error);
+    }
   } else {
     res.status(403).json("You are not admin");
   }
@@ -31,7 +33,9 @@ router.put("/:id", verify, async (req, res) => {
         }
       );
       res.status(200).json(updatedMovie);
-    } catch (error) {}
+    } catch (error) {
+      res.status(500).json.log(error);
+    }
   } else {
     res.status(403).json("You are not admin");
   }
@@ -43,7 +47,9 @@ router.delete("/:id", verify, async (req, res) => {
     try {
       await Movie.findByIdAndDelete(req.params.id);
       res.status(200).json("Movie has been deleted");
-    } catch (error) {}
+    } catch (error) {
+      res.status(500).json.log(error);
+    }
   } else {
     res.status(403).json("You are not admin");
   }
@@ -54,7 +60,9 @@ router.get("/find/:id", verify, async (req, res) => {
   try {
     const movie = await Movie.findById(req.params.id);
     res.status(200).json(movie);
-  } catch (error) {}
+  } catch (error) {
+    res.status(500).json.log(error);
+  }
 });
 
 // Get featured/popular movie
@@ -78,7 +86,9 @@ router.get("/random", verify, async (req, res) => {
       ]);
     }
     res.status(200).json(movie);
-  } catch (error) {}
+  } catch (error) {
+    res.status(500).json.log(error);
+  }
 });
 
 //GET ALL
@@ -88,10 +98,14 @@ router.get("/", verify, async (req, res) => {
     try {
       const movies = await Movie.find();
       res.status(200).json(movies.reverse());
-    } catch (error) {}
+    } catch (error) {
+      res.status(500).json.log(error);
+    }
   } else {
     res.status(403).json("You are not admin");
   }
 });
+
+// DELETE
 
 export default router;
