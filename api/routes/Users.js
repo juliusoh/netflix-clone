@@ -5,6 +5,7 @@ import CryptoJS from "crypto-js";
 import verify from "../verifyToken.js";
 //UPDATE user
 router.put("/:id", verify, async (req, res) => {
+  console.log(req.user.id, req.params.id)
   if (req.user.id === req.params.id || req.user.isAdmin) {
     if (req.body.password) {
       req.body.password = CryptoJS.AES.encrypt(
@@ -79,7 +80,6 @@ router.get("/stats", async (req, res) => {
   const today = new Date();
   const lastYear = today.setFullYear(today.setFullYear() - 1);
 
-  const monthsArray = [];
 
   try {
     const data = await User.aggregate([
